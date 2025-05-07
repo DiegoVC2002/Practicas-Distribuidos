@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Carrera de Autos PWA</title>
+</head>
+<body>
+  <h1 class="titulo">🏁 Carrera de Autos</h1>
+  <section id="registro">
+    <input type="text" id="nombreAuto" placeholder="Nombre del auto" />
+    <button onclick="registrarAuto()">Registrar Auto</button>
+    <p id="mensaje"></p>
+  </section>
+
+  <section id="pista" class="hide">
+    <div id="autos"></div>
+    <button id="iniciarBtn" onclick="iniciarCarrera()">Iniciar Carrera</button>
+  </section>
+
+  <section id="podio" class="hide">
+    <h2>Resultado Final 🏆</h2>
+    <ol id="resultado"></ol>
+    <button onclick="reiniciarCarrera()">Reiniciar</button>
+  </section>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>

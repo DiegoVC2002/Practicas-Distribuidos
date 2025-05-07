@@ -1,0 +1,20 @@
+Practica 6 - Servicios Web
+Autor: Diego Valdés Castillo
+
+COMANDOS DE CURL DESDE CMD:
+
+Registrar auto:
+curl -X POST "http://localhost:5000/register" -H "Content-Type: application/json" -d "{\"car_id\": \"car_name\"}"
+
+Mover auto:
+curl -X POST "http://localhost:5000/move" -H "Content-Type: application/json" -d "{\"car_id\": \"car_name\", \"distance\": metros}"
+
+Estado de la carrera:
+curl -X GET "http://localhost:5000/race_status"
+
+Podio de la carrera:
+curl -X GET "http://localhost:5000/podium"
+
+COMANDOS DE FLASK DESDE LA RUTA DEL ARCHIVO EN POWERSHELL:
+python carrera.py
+

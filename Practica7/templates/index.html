@@ -1,0 +1,150 @@
+<!--Materia: Sistemas Distribuidos
+#Autor: Diego Valdes Castillo
+#Fecha de  creacion: 05/04/2025
+#Version: 1.0
+#Practica 7 - Microservicios
+#Codigo para la carrera- Interfaz Web-->
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrera de Autos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .track-container {
+            width: 90%;
+            margin: 20px auto;
+            text-align: left;
+        }
+
+        .car-name-label {
+            margin-left: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ffeb3b;
+            text-shadow: 1px 1px 3px black;
+            font-size: 1.1em;
+        }
+
+        .track {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 25px;
+            height: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .car {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            transition: left 0.5s;
+            top: 5px;
+        }
+
+        .car img {
+            width: 100%;
+            transform: scaleX(-1);
+        }
+
+        .podium {
+            margin-top: 40px;
+        }
+
+        .podium h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .podium p {
+            background: rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #ffffff;
+            border: 2px solid #ffffff22;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .podium p:nth-child(2) {
+            background-color: #ffd700;
+            color: #000;
+        }
+
+        .podium p:nth-child(3) {
+            background-color: #c0c0c0;
+            color: #000;
+        }
+
+        .podium p:nth-child(4) {
+            background-color: #cd7f32;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏁 Carrera de Autos 🏁</h1>
+    <div id="race"></div>
+    <div class="podium" id="podium"></div>
+
+    <script>
+        async function fetchRaceStatus() {
+            const res = await fetch("/race_status");
+            const data = await res.json();
+            const raceDiv = document.getElementById('race');
+            raceDiv.innerHTML = "";
+
+            for (const [car, info] of Object.entries(data.cars)) {
+                const trackContainer = document.createElement('div');
+                trackContainer.className = "track-container";
+
+                const nameLabel = document.createElement('div');
+                nameLabel.className = "car-name-label";
+                nameLabel.innerText = car;
+
+                const track = document.createElement('div');
+                track.className = "track";
+
+                const carDiv = document.createElement('div');
+                carDiv.className = "car";
+                carDiv.style.left = `${(info.position / data.max_distance) * 100}%`;
+                carDiv.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/744/744465.png" alt="car">`;
+
+                track.appendChild(carDiv);
+                trackContainer.appendChild(nameLabel);
+                trackContainer.appendChild(track);
+                raceDiv.appendChild(trackContainer);
+            }
+
+            const podium = data.podium;
+            const podiumDiv = document.getElementById('podium');
+            if (podium.length > 0) {
+                podiumDiv.innerHTML = `<h2>🎉 Podio 🎉</h2>` + 
+                    podium.map((c, i) => `<p>${i + 1}. ${c}</p>`).join('');
+            }
+        }
+
+        setInterval(fetchRaceStatus, 1000);
+        fetchRaceStatus();
+    </script>
+</body>
+</html>

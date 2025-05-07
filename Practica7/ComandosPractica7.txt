@@ -1,0 +1,22 @@
+Practica 7 - Microservicios
+Autor: Diego Valdés Castillo
+
+COMANDOS DE CURL DESDE CMD:
+
+- Registrar auto:
+curl -X POST "http://localhost:5001/register" -H "Content-Type: application/json" -d "{\"car_id\": \"car_name\"}"
+
+- Mover auto:
+curl -X POST "http://localhost:5002/move" -H "Content-Type: application/json" -d "{\"car_id\": \"car_name\", \"distance\": metros}"
+
+- Estatus de carrera:
+curl -X GET "http://localhost:5003/race_status"
+
+- Ver podio:
+curl -X GET "http://localhost:5004/podium"
+
+
+
+COMANDOS DE FLASK DESDE LA RUTA DE LOS ARCHIVOS EN POWERSHELL:
+python nombre_codigo.py
+
